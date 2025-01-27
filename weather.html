@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f3f4f6;
+    }
+
+    .weather-app {
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 300px;
+    }
+
+    .weather-app h1 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    .weather-app input {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .weather-app button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .weather-app button:hover {
+      background-color: #0056b3;
+    }
+
+    .weather-result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="weather-app">
+    <h1>Weather App</h1>
+    <input type="text" id="location" placeholder="Enter location">
+    <button onclick="getWeather()">Get Weather</button>
+    <div id="result" class="weather-result"></div>
+  </div>
+
+  <script>
+    async function getWeather() {
+      const location = document.getElementById('location').value;
+      const resultDiv = document.getElementById('result');
+
+      if (!location) {
+        resultDiv.textContent = 'Please enter a location';
+        return;
+      }
+
+      try {
+        const response = await fetch(`write your api url`);
+        if (!response.ok) {
+          throw new Error('Location not found');
+        }
+
+        const data = await response.json();
+        const temperature = data.current.temp_c;
+        const condition = data.current.condition.text;
+
+        resultDiv.textContent = `The current temperature in ${location} is ${temperature}°C and the weather is ${condition}.`;
+      } catch (error) {
+        resultDiv.textContent = error.message;
+      }
+    }
+  </script>
+</body>
+</html>
